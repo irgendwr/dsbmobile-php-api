@@ -1,2 +1,19 @@
 # dsbmobile-php-api
-Just a quick php api I made for dsbmobile because they don't provide one.
+Just a quick php api I made for [dsbmobile](https://www.dsbmobile.de) because they don't provide one, nothing fancy.
+
+Requirements: curl
+
+### Example
+```
+<?php
+include("dsb_api.php");
+
+$timetableurl = DSB::getTopicChildUrl(0, 0, "user", "pass");
+
+if ($timetableurl == false) {
+    echo "<center><h2>DSB Api Error</h2></center>";
+} else {
+    echo file_get_contents($timetableurl);
+}
+?>
+```

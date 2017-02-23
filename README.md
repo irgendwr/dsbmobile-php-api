@@ -8,7 +8,7 @@ Requirements: curl
 <?php
 include("dsb_api.php");
 
-$timetableurl = DSB::getTopicChildUrl(0, 0, "user", "pass");
+$timetableurl = DSB::getTopicChildUrl(0, 0, "DSB-username", "DSB-password");
 
 if ($timetableurl == false) {
     echo "<center><h2>DSB Api Error</h2></center>";
@@ -17,3 +17,7 @@ if ($timetableurl == false) {
 }
 ?>
 ```
+
+The two integers passed to getTopicChildUrl determine the category (should be zero in most cases) and which child should be returned.
+
+![DSB APi Example](https://i.sandstorm-projects.de/dsb-api-example)

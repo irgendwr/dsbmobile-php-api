@@ -1,3 +1,7 @@
+//API by irgendwr
+//GitHub-Project: https://github.com/irgendwr/dsbmobile-php-api
+//Thank you for using my API
+
 <?php
 
 class DSB {

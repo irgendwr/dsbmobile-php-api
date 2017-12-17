@@ -61,6 +61,7 @@ class DSB {
                 "Content-Type: application/json;charset=utf-8",
                 "Bundle_ID: " . self::BUNDLE_ID
             ),
+            CURLOPT_REFERER => "https://www.dsbmobile.de/default.aspx",
             CURLOPT_POSTFIELDS => $data
         ));
 

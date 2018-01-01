@@ -1,26 +1,26 @@
 # dsbmobile-php-api
-Just a quick php api I made for [dsbmobile](https://www.dsbmobile.de) because they don't provide one, nothing fancy.
+This library lets you access content from [DSBmobile](https://www.dsbmobile.de) in php.
 
-Requirements: curl
+Requirements:
+- PHP 5.4.x or newer
+- curl
 
 ### Example
-```
+```php
 <?php
-include("dsb_api.php");
+include('path/to/dsb_api.php');
 
-// get the first element of the first topic
-$timetableurl = DSB::getTopicChildUrl(0, 0, "DSB-username", "DSB-password");
+// log in
+$dsb = new DsbAccount('username', 'password');
 
-if ($timetableurl == false) {
-    // an error occurred
-    echo "<center><h2>DSB Api Error</h2></center>";
+// get the url of the first element of the first topic
+$timetableUrl = $dsb->getTopic(0)->getChild(0)->getUrl();
+
+if ($timetableUrl) {
+    echo '<a href="' . $timetableUrl . '">Timetable</a>';
 } else {
-    // get and output the html code
-    echo file_get_contents($timetableurl);
+    // an error occurred
+    echo '<h2>DSB api error 🙁</h2>';
 }
 ?>
 ```
-
-The two integers passed to `getTopicChildUrl()` determine the category/topic (should be zero in most cases) and which child should be returned.
-
-![DSB API example](https://i.sandstorm-projects.de/dsb-api-example)

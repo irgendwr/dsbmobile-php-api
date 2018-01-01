@@ -190,6 +190,15 @@ class DsbTopic {
     }
 
     /**
+     * Gets the title
+     * 
+     * @return string Title
+     */
+    public function getTitle() {
+        return $this->isValid() ? $this->topic->Title : '';
+    }
+
+    /**
      * Gets a child with a specified index
      * 
      * @param int $index Index of the child
@@ -223,25 +232,52 @@ class DsbTopicChild {
     }
 
     /**
-     * Gets the Url to the content of the topic child
+     * Gets the Id
      * 
-     * @return string|boolean Url of the content or false if an error occurred
+     * @return string Id
+     */
+    public function getId() {
+        return $this->isValid() ? $this->child->Id : '';
+    }
+
+    /**
+     * Gets the Date
+     * 
+     * @return string Date
+     */
+    public function getDate() {
+        return $this->isValid() ? $this->child->Date : '';
+    }
+
+    /**
+     * Gets the title
+     * 
+     * @return string Title
+     */
+    public function getTitle() {
+        return $this->isValid() ? $this->child->Title : '';
+    }
+
+    /**
+     * Gets the Url to the content
+     * 
+     * @return string Url
      */
     public function getUrl() {
-        return $this->isValid() ? $this->child->Childs[0]->Detail : false;
+        return $this->isValid() ? $this->child->Childs[0]->Detail : '';
     }
 
     /**
      * Gets the Html code of the content
      * WARNING: This can lead to XSS vulnerabilities so use this carefully!
      * 
-     * @return string|boolean Html code of the content or false if an error occurred
+     * @return string Html code
      */
     public function getHtml() {
         $url = $this->getUrl();
 
         if (!($url && filter_var($url, FILTER_VALIDATE_URL))) {
-            return false;
+            return '';
         }
 
         $headers = get_headers($url, 1);
@@ -266,7 +302,7 @@ class DsbTopicChild {
             return '<p style="text-align:center;" class="dsb"><img src="' . $url . '" class="dsb"></p>';
         } else {
             // unknown content type
-            return false;
+            return '';
         }
     }
 }

@@ -26,7 +26,7 @@ class Dsbmobile {
         'Feedback' => 3,
         'Subjects' => 4
     ];
-    const Success = 1;
+    const Success = 0;
     const UserAgent = '';
     const Webservice = 'http://www.dsbmobile.de/JsonHandlerWeb.ashx/GetData';
 }
@@ -125,7 +125,7 @@ class DsbAccount {
         $response = json_decode($response);
 
         // check if request was successfull
-        if ($response->Resultcode == Dsbmobile::Success) {
+        if ($response->Resultcode != Dsbmobile::Success) {
             error_log('DSB api error: ' . $response->ResultStatusInfo);
             return false;
         } else {
@@ -308,16 +308,16 @@ class DsbTopicChild {
 }
 
 function getAbsBaseUrl($url) {
-    $parsed_url = parse_url($url);
-    $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
-    $host     = isset($parsed_url['host']) ? $parsed_url['host'] : '';
-    $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
-    $user     = isset($parsed_url['user']) ? $parsed_url['user'] : '';
-    $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
-    $pass     = ($user || $pass) ? "$pass@" : '';
-    $path     = '';
-    if (isset($parsed_url['path'])) {
-        preg_match('/^.+\//', $parsed_url['path'], $match);
+    $parsedUrl = parse_url($url);
+    $scheme = isset($parsedUrl['scheme']) ? $parsedUrl['scheme'] . '://' : '';
+    $host = isset($parsedUrl['host']) ? $parsedUrl['host'] : '';
+    $port = isset($parsedUrl['port']) ? ':' . $parsedUrl['port'] : '';
+    $user = isset($parsedUrl['user']) ? $parsedUrl['user'] : '';
+    $pass = isset($parsedUrl['pass']) ? ':' . $parsedUrl['pass']  : '';
+    $pass = ($user || $pass) ? "$pass@" : '';
+    $path = '';
+    if (isset($parsedUrl['path'])) {
+        preg_match('/^.+\//', $parsedUrl['path'], $match);
         $path = $match[0];
     }
     return "$scheme$user$pass$host$port$path";

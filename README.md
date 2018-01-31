@@ -3,7 +3,7 @@ This library lets you access content from [DSBmobile](https://www.dsbmobile.de) 
 
 Requirements:
 - PHP 5.4.x or newer
-- curl
+- curl module for php (on debian/ubuntu: `apt install php7.0-curl`)
 
 ### Example
 ```php
@@ -14,7 +14,7 @@ include('path/to/dsb_api.php');
 $dsb = new DsbAccount('username', 'password');
 
 // get the url of the first element of the first topic
-$timetableUrl = $dsb->getTopic(0)->getChild(0)->getUrl();
+$timetableUrl = $dsb->getTopic()->getChild(0)->getUrl();
 
 if ($timetableUrl) {
     echo '<a href="' . $timetableUrl . '">Timetable</a>';

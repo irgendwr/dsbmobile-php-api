@@ -17,7 +17,7 @@ include('path/to/dsb_api.php');
 $dsb = new DsbAccount('username', 'password');
 
 // get the url of the first element of the first topic
-$timetableUrl = $dsb->getTopic()->getChild(0)->getUrl();
+$timetableUrl = $dsb->getTopic()->getItem(0)->getUrl();
 
 if ($timetableUrl) {
     echo '<a href="' . $timetableUrl . '">Timetable</a>';

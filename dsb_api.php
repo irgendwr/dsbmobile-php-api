@@ -225,7 +225,7 @@ class DsbTopic {
      * @return DsbItem item
      */
     public function getChild($index = 0) {
-        return getItem($index);
+        return $this->getItem($index);
     }
 }
 
@@ -283,13 +283,26 @@ class DsbItem {
     }
 
     /**
-     * Gets the Url to the content
+     * Gets either the Url if item is a timetable or the text if item is a news entry
+     * 
+     * @since 2.1.0
+     * @return string Url or Text
+     */
+    public function getDetail() {
+        return $this->isValid() ? $this->item->Childs[0]->Detail : '';
+    }
+
+    /**
+     * Gets the Url of a timetable
      * 
      * @since 2.0.0
+     * @see getDetail()
      * @return string Url
      */
     public function getUrl() {
-        return $this->isValid() ? $this->item->Childs[0]->Detail : '';
+        $url = $this->getDetail();
+
+        return filter_var($url, FILTER_VALIDATE_URL) ? $url : '';
     }
 
     /**

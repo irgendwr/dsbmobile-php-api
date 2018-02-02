@@ -286,9 +286,11 @@ class DsbItem {
         if ($contentType == 'text/html') {
             $html = file_get_contents($url);
 
-            // turn relative urls into absolute ones:
+            // get the base url
+            preg_match('/^.+\//', $url, $match);
+            $absoluteUrlPath = $match[0];
 
-            $absoluteUrlPath = getAbsBaseUrl($url);
+            // turn relative urls into absolute ones:
 
             preg_match_all('/(?:href|src)="(?<url>.+)"/', $html, $refs);
             foreach ($refs['url'] as $ref) {
@@ -305,20 +307,4 @@ class DsbItem {
             return '';
         }
     }
-}
-
-function getAbsBaseUrl($url) {
-    $parsedUrl = parse_url($url);
-    $scheme = isset($parsedUrl['scheme']) ? $parsedUrl['scheme'] . '://' : '';
-    $host = isset($parsedUrl['host']) ? $parsedUrl['host'] : '';
-    $port = isset($parsedUrl['port']) ? ':' . $parsedUrl['port'] : '';
-    $user = isset($parsedUrl['user']) ? $parsedUrl['user'] : '';
-    $pass = isset($parsedUrl['pass']) ? ':' . $parsedUrl['pass']  : '';
-    $pass = ($user || $pass) ? "$pass@" : '';
-    $path = '';
-    if (isset($parsedUrl['path'])) {
-        preg_match('/^.+\//', $parsedUrl['path'], $match);
-        $path = $match[0];
-    }
-    return "$scheme$user$pass$host$port$path";
 }

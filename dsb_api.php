@@ -138,13 +138,13 @@ class DsbAccount {
      * Gets alls topics
      * 
      * @since 2.0.0
-     * @return array|bool Returns array of topics or false if an error occurred
+     * @return array Returns array of topics
      */
     private function getTopics() {
         $data = $this->getData();
 
         // TODO: turn them into DsbTopic classes
-        return $data ? $data->ResultMenuItems[0]->Childs : false;
+        return $data ? $data->ResultMenuItems[0]->Childs : [];
     }
 
     /**
@@ -155,18 +155,62 @@ class DsbAccount {
      * @return DsbTopic Topic
      */
     public function getTopic($index = 0) {
-        $topics = $this->getTopics();
-
-        if ($topics) {
-            foreach ($topics as $topic) {
-                if ($topic->Index == $index) {
-                    return new DsbTopic($topic);
-                }
+        foreach ($this->getTopics() as $topic) {
+            if ($topic->Index == $index) {
+                return new DsbTopic($topic);
             }
         }
         
-        // error
+        // topic was not found
         return new DsbTopic(false);
+    }
+
+    /**
+     * Gets a topic with a specified method
+     * 
+     * @since 2.0.0
+     * @param string $method Method of the topic
+     * @return DsbTopic Topic
+     */
+    public function getTopicByMethod($method) {
+        foreach ($this->getTopics() as $topic) {
+            if ($topic->MethodName == $method) {
+                return new DsbTopic($topic);
+            }
+        }
+        
+        // topic was not found
+        return new DsbTopic(false);
+    }
+
+    /**
+     * Gets the topic containing timetables
+     * 
+     * @since 2.1.0
+     * @return DsbTopic Topic
+     */
+    public function getTimetables() {
+        return $this->getTopicByMethod('timetable');
+    }
+
+    /**
+     * Gets the topic containing tiles
+     * 
+     * @since 2.1.0
+     * @return DsbTopic Topic
+     */
+    public function getTiles() {
+        return $this->getTopicByMethod('tiles');
+    }
+
+    /**
+     * Gets the topic containing news
+     * 
+     * @since 2.1.0
+     * @return DsbTopic Topic
+     */
+    public function getNews() {
+        return $this->getTopicByMethod('news');
     }
 }
 
@@ -201,6 +245,26 @@ class DsbTopic {
      */
     public function getTitle() {
         return $this->isValid() ? $this->topic->Title : '';
+    }
+
+    /**
+     * Gets the index
+     * 
+     * @since 2.1.0
+     * @return int Index
+     */
+    public function getIndex() {
+        return $this->isValid() ? $this->Index : 0;
+    }
+
+    /**
+     * Gets the url of the icon
+     * 
+     * @since 2.1.0
+     * @return string Url to icon
+     */
+    public function getIcon() {
+        return $this->isValid() ? $this->IconLink : '';
     }
 
     /**

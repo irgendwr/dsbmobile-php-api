@@ -202,17 +202,17 @@ class DsbTopic {
      * Gets a child with a specified index
      * 
      * @param int $index Index of the child
-     * @return DsbTopicChild Child
+     * @return DsbItem Child
      */
     public function getChild($index = 0) {
-        return new DsbTopicChild($this->isValid() ? $this->topic->Root->Childs[$index] : false);
+        return new DsbItem($this->isValid() ? $this->topic->Root->Childs[$index] : false);
     }
 }
 
 /**
 * Child of a Topic
 */
-class DsbTopicChild {
+class DsbItem {
     private $child;
 
     /**

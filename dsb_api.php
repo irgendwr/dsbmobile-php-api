@@ -3,7 +3,7 @@
 * This library enables you to fetch content from DSBmobile.
 *
 * @author   Jonas Bögle
-* @version  2.0
+* @version  2.1.0
 * @link     https://github.com/irgendwr/dsbmobile-php-api
 * @license  https://github.com/irgendwr/dsbmobile-php-api/blob/master/LICENSE   MIT License
 */
@@ -50,6 +50,7 @@ class DsbAccount {
     /**
      * Gets the data linked with the account
      * 
+     * @since 2.0.0
      * @return object|boolean Returns data or false if an error occurred
      */
     public function getData() {
@@ -136,6 +137,7 @@ class DsbAccount {
     /**
      * Gets alls topics
      * 
+     * @since 2.0.0
      * @return array|bool Returns array of topics or false if an error occurred
      */
     private function getTopics() {
@@ -148,6 +150,7 @@ class DsbAccount {
     /**
      * Gets a topic with a specified index
      * 
+     * @since 2.0.0
      * @param int $index Index of the topic
      * @return DsbTopic Topic
      */
@@ -183,6 +186,7 @@ class DsbTopic {
     /**
      * Checks whether object contains data
      * 
+     * @since 2.0.0
      * @return boolean Returns true if no error occurred
      */
     function isValid() {
@@ -192,6 +196,7 @@ class DsbTopic {
     /**
      * Gets the title
      * 
+     * @since 2.0.0
      * @return string Title
      */
     public function getTitle() {
@@ -199,78 +204,99 @@ class DsbTopic {
     }
 
     /**
-     * Gets a child with a specified index
+     * Gets an item with a specified index
      * 
-     * @param int $index Index of the child
-     * @return DsbItem Child
+     * @since 2.1.0
+     * @param int $index Index of the item
+     * @return DsbItem item
+     */
+    public function getItem($index = 0) {
+        return new DsbItem($this->isValid() ? $this->topic->Root->Childs[$index] : false);
+    }
+
+    /**
+     * Gets an item with a specified index
+     * 
+     * @since 2.0.0
+     * @deprecated 2.1.0 Use getItem()
+     * @see getItem()
+     * 
+     * @param int $index Index of the item
+     * @return DsbItem item
      */
     public function getChild($index = 0) {
-        return new DsbItem($this->isValid() ? $this->topic->Root->Childs[$index] : false);
+        return getItem($index);
     }
 }
 
 /**
-* Child of a Topic
+* Item of a Topic
 */
 class DsbItem {
-    private $child;
+    private $item;
 
     /**
-     * @param object $data Child data
+     * @param object $data Item data
      */
     function __construct($data) {
-        $this->child = $data;
+        $this->item = $data;
     }
 
     /**
      * Checks whether object contains data
      * 
+     * @since 2.0.0
      * @return boolean Returns true if no error occurred
      */
     function isValid() {
-        return $this->child != false;
+        return $this->item != false;
     }
 
     /**
      * Gets the Id
      * 
+     * @since 2.0.0
      * @return string Id
      */
     public function getId() {
-        return $this->isValid() ? $this->child->Id : '';
+        return $this->isValid() ? $this->item->Id : '';
     }
 
     /**
      * Gets the Date
      * 
+     * @since 2.0.0
      * @return string Date
      */
     public function getDate() {
-        return $this->isValid() ? $this->child->Date : '';
+        return $this->isValid() ? $this->item->Date : '';
     }
 
     /**
      * Gets the title
      * 
+     * @since 2.0.0
      * @return string Title
      */
     public function getTitle() {
-        return $this->isValid() ? $this->child->Title : '';
+        return $this->isValid() ? $this->item->Title : '';
     }
 
     /**
      * Gets the Url to the content
      * 
+     * @since 2.0.0
      * @return string Url
      */
     public function getUrl() {
-        return $this->isValid() ? $this->child->Childs[0]->Detail : '';
+        return $this->isValid() ? $this->item->Childs[0]->Detail : '';
     }
 
     /**
      * Gets the Html code of the content
      * WARNING: This can lead to XSS vulnerabilities so use this carefully!
      * 
+     * @since 2.0.0
      * @return string Html code
      */
     public function getHtml() {
@@ -291,7 +317,6 @@ class DsbItem {
             $absoluteUrlPath = $match[0];
 
             // turn relative urls into absolute ones:
-
             preg_match_all('/(?:href|src)="(?<url>.+)"/', $html, $refs);
             foreach ($refs['url'] as $ref) {
                 // skip if url is already valid

@@ -293,6 +293,8 @@ class DsbTopic {
     }
 }
 
+// TODO: add getters for tile items
+
 /**
 * Item of a Topic
 */
@@ -354,6 +356,67 @@ class DsbItem {
      */
     public function getDetail() {
         return $this->isValid() ? $this->item->Childs[0]->Detail : '';
+    }
+
+    /**
+     * Gets Preview
+     * 
+     * @since 2.1.0
+     * @return string Url or Text
+     */
+    public function getPreview() {
+        return $this->isValid() ? $this->item->Childs[0]->Preview : '';
+    }
+
+    /**
+     * Gets tags
+     * 
+     * @since 2.1.0
+     * @return string Tags
+     */
+    public function getTags() {
+        return $this->isValid() ? $this->item->Tags : '';
+    }
+
+    /**
+     * Gets content type
+     * 
+     * @since 2.1.0
+     * @return int Content Type
+     */
+    public function getConType() {
+        return $this->isValid() ? $this->item->ConType : 0;
+    }
+
+    /**
+     * Gets prio
+     * 
+     * @since 2.1.0
+     * @return int Prio
+     */
+    public function getPrio() {
+        return $this->isValid() ? $this->item->Prio : 0;
+    }
+
+    /**
+     * Gets index
+     * 
+     * @since 2.1.0
+     * @return int Index
+     */
+    public function getIndex() {
+        return $this->isValid() ? $this->item->Index : 0;
+    }
+
+    /**
+     * Gets an item with a specified index
+     * 
+     * @since 2.1.0
+     * @param int $index Index of the item
+     * @return DsbItem item
+     */
+    public function getItem($index = 0) {
+        return new DsbItem($this->isValid() ? $this->Childs[$index] : false);
     }
 
     /**

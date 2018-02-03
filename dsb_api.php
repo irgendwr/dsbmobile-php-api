@@ -228,12 +228,23 @@ class DsbTopic {
     }
 
     /**
+     * Returns the raw data;
+     * Try to avoid using this.
+     * 
+     * @since 2.1.0
+     * @return object
+     */
+    public function getData() {
+        return $item;
+    }
+
+    /**
      * Checks whether object contains data
      * 
      * @since 2.0.0
      * @return boolean Returns true if no error occurred
      */
-    function isValid() {
+    public function isValid() {
         return $this->topic != false;
     }
 
@@ -293,8 +304,6 @@ class DsbTopic {
     }
 }
 
-// TODO: add getters for tile items
-
 /**
 * Item of a Topic
 */
@@ -309,12 +318,23 @@ class DsbItem {
     }
 
     /**
+     * Returns the raw data;
+     * Try to avoid using this.
+     * 
+     * @since 2.1.0
+     * @return object
+     */
+    public function getData() {
+        return $item;
+    }
+
+    /**
      * Checks whether object contains data
      * 
      * @since 2.0.0
      * @return boolean Returns true if no error occurred
      */
-    function isValid() {
+    public function isValid() {
         return $this->item != false;
     }
 

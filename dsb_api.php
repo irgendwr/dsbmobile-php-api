@@ -285,6 +285,24 @@ class DsbTopic {
     }
 
     /**
+     * Gets all of the items
+     * 
+     * @since 2.1.0
+     * @return array Array of DsbItem's
+     */
+    public function getItems() {
+        $items = [];
+
+        if ($this->isValid()) {
+            foreach ($this->topic->Root->Childs as $item) {
+                $items[] = new DsbItem($item);
+            }
+        }
+
+        return $items;
+    }
+
+    /**
      * Gets an item with a specified index
      * 
      * @since 2.1.0
@@ -442,6 +460,24 @@ class DsbItem {
      */
     public function getIndex() {
         return $this->isValid() ? $this->item->Index : 0;
+    }
+
+    /**
+     * Gets all of the items
+     * 
+     * @since 2.1.0
+     * @return array Array of DsbItem's
+     */
+    public function getItems() {
+        $items = [];
+
+        if ($this->isValid()) {
+            foreach ($this->item->Childs as $item) {
+                $items[] = new DsbItem($item);
+            }
+        }
+
+        return $items;
     }
 
     /**

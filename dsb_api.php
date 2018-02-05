@@ -140,11 +140,17 @@ class DsbAccount {
      * @since 2.0.0
      * @return array Returns array of topics
      */
-    private function getTopics() {
+    public function getTopics() {
         $data = $this->getData();
+        $topics = [];
 
-        // TODO: turn them into DsbTopic classes
-        return $data ? $data->ResultMenuItems[0]->Childs : [];
+        if ($data) {
+            foreach ($data->ResultMenuItems[0]->Childs as $topic) {
+                $topics[] = new DsbTopic($topic);
+            }
+        }
+
+        return $topics;
     }
 
     /**
@@ -156,8 +162,8 @@ class DsbAccount {
      */
     public function getTopic($index = 0) {
         foreach ($this->getTopics() as $topic) {
-            if ($topic->Index == $index) {
-                return new DsbTopic($topic);
+            if ($topic->getIndex() == $index) {
+                return $topic;
             }
         }
         
@@ -174,8 +180,8 @@ class DsbAccount {
      */
     public function getTopicByMethod($method) {
         foreach ($this->getTopics() as $topic) {
-            if ($topic->MethodName == $method) {
-                return new DsbTopic($topic);
+            if ($topic->getMethodName() == $method) {
+                return $topic;
             }
         }
         
@@ -265,7 +271,7 @@ class DsbTopic {
      * @return int Index
      */
     public function getIndex() {
-        return $this->isValid() ? $this->Index : 0;
+        return $this->isValid() ? $this->topic->Index : 0;
     }
 
     /**
@@ -275,7 +281,7 @@ class DsbTopic {
      * @return string Url to icon
      */
     public function getIcon() {
-        return $this->isValid() ? $this->IconLink : '';
+        return $this->isValid() ? $this->topic->IconLink : '';
     }
 
     /**
@@ -301,6 +307,16 @@ class DsbTopic {
      */
     public function getChild($index = 0) {
         return $this->getItem($index);
+    }
+
+    /**
+     * Gets the MethodName
+     * 
+     * @since 2.1.0
+     * @return string MethodName
+     */
+    public function getMethodName() {
+        return $this->isValid() ? $this->topic->MethodName : '';
     }
 }
 
@@ -462,7 +478,7 @@ class DsbItem {
     public function getHtml() {
         $url = $this->getUrl();
 
-        if (!($url && filter_var($url, FILTER_VALIDATE_URL))) {
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
             return '';
         }
 

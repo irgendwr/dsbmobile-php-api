@@ -452,7 +452,7 @@ class DsbItem {
      * @return DsbItem item
      */
     public function getItem($index = 0) {
-        return new DsbItem($this->isValid() ? $this->Childs[$index] : false);
+        return new DsbItem($this->isValid() ? $this->item->Childs[$index] : false);
     }
 
     /**

@@ -541,7 +541,7 @@ class DsbItem {
             return '<p style="text-align:center;" class="dsb"><img src="' . $url . '" class="dsb"></p>';
         } else {
             // unknown content type
-            return '';
+            return '<a href="' . $url . '" class="dsb">' . $this->getTitle() . '</a>';
         }
     }
 }

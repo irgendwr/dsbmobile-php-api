@@ -1,15 +1,19 @@
 # dsbmobile-php-api
-> This library lets you access content from [DSBmobile](https://www.dsbmobile.de) in php.
 
 [![Documentation](https://img.shields.io/badge/dsbmobile--php--api-docs-blue.svg)](https://irgendwr.github.io/dsbmobile-php-api/)
 [![Travis](https://travis-ci.org/irgendwr/dsbmobile-php-api.svg)](https://travis-ci.org/irgendwr/dsbmobile-php-api)
 
-### Requirements
+This library lets you access content from [DSBmobile](https://www.dsbmobile.de) in php.
+
+## Requirements
+
 - PHP 5.4.x or newer
 - curl module for php (on debian/ubuntu: `apt install php7.0-curl`)
 
-### Example
-#### Basic example
+## Example
+
+### Basic example
+
 ```php
 <?php
 include('path/to/dsb_api.php');
@@ -28,7 +32,8 @@ if ($timetableUrl) {
 }
 ```
 
-#### Displaying every timetable
+### Display every timetable
+
 ```php
 // get all timetables
 $timetables = $dsb->getTimetables()->getItems();
@@ -39,7 +44,7 @@ foreach ($timetables as $timetable) {
     echo $timetable->getHTML();
 }
 
-// an error occurred 
+// check if an error occurred
 if (count($timetables) == 0) {
     echo '<h2>Something went wrong 🙁</h2>';
 }
